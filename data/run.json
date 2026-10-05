@@ -1,0 +1,63 @@
+{
+  "organ": "kestrel-ledger",
+  "seed": 2026,
+  "N": 10000,
+  "reconstruction": {
+    "byteIdentical": true,
+    "fold": 953638848,
+    "applied": 10000,
+    "canonLen": 6138
+  },
+  "storage": {
+    "packed": 10000,
+    "ledgerPayloadBytes": 60000,
+    "ledgerSignedBytes": 710000,
+    "jsonBytes": 1553849,
+    "jsonSignedBytes": 2523849,
+    "ratioPayloadVsJson": 25.9,
+    "ratioSignedVsJsonSigned": 3.55,
+    "ledgerPayloadKB": 58.6,
+    "jsonMB": 1.48
+  },
+  "replay": {
+    "packets": 10000,
+    "replayMs10k": 16.252,
+    "applied": 10000
+  },
+  "tamper": {
+    "forged": 2,
+    "tamperedForged": 0,
+    "overBudget": 1,
+    "replay": 1,
+    "totalRejected": 3,
+    "appliedValid": 3,
+    "poisonedEqualsClean": true
+  },
+  "bounded": {
+    "freshMisses": true,
+    "rehydratedCatches": true
+  },
+  "verdict": {
+    "P1-reconstruction": true,
+    "P2-storage-coordinate": true,
+    "P3-storage-signed-honest": true,
+    "P4-replay-speed": true,
+    "P5-tamper-rejected": true,
+    "P6-bounded-home": true,
+    "passed": 6,
+    "of": 6
+  },
+  "inputs": {
+    "sentinel.mjs": "81f05c11fa98c72e7119f3b8166d2cf4ff10cdeccaa1ae0d711367d778944440",
+    "kestrelledger.mjs": "8d3b7d0173a0e6aef2c77e663aab83f6c3418ae396a87eba5867f2db369acd37",
+    "scripts/measure.mjs": "fa4cc9a9c60787e5c5035cc76a041a658db74d6f55dd9fc6371d00a776b48d55"
+  },
+  "predictions": [
+    "P1-reconstruction",
+    "P2-storage-coordinate",
+    "P3-storage-signed-honest",
+    "P4-replay-speed",
+    "P5-tamper-rejected",
+    "P6-bounded-home"
+  ]
+}

@@ -5,12 +5,13 @@ Live: https://sjgant80-hub.github.io/kestrel-ledger/
 Source: https://github.com/sjgant80-hub/kestrel-ledger
 Built on SENTINEL (https://sjgant80-hub.github.io/sentinel/) and FALL-AIRGAP. Codec: Thomas Frumkin's Konomi / LIGHT primorial-fold (used with permission).
 
-## Sealed, awaiting measurement
-Predictions + the sha256 of every input committed as their own commit before the measurement. Inputs pinned:
-- sentinel.mjs: sha256 81f05c11fa98c72e7119f3b8166d2cf4ff10cdeccaa1ae0d711367d778944440
-- kestrelledger.mjs: sha256 8d3b7d0173a0e6aef2c77e663aab83f6c3418ae396a87eba5867f2db369acd37
-- scripts/measure.mjs: sha256 fa4cc9a9c60787e5c5035cc76a041a658db74d6f55dd9fc6371d00a776b48d55
-The results land on the next commit and are re-derived on CI from exactly these inputs.
+## Measured (re-derived on CI from the sealed inputs)
+- Reconstruction: exhale 10000 mutations, drop RAM, inhale -> BYTE-IDENTICAL to the pre-close state (true).
+- Storage (coordinate): 6-byte ledger 58.6 KB vs traditional JSON 1.48 MB = 25.9x.
+- Storage (signed, honest): fully signed 71-byte rows vs signed JSON = 3.55x (the 64-byte Ed25519 signature is irreducible).
+- Replay: 10000 packets replayed in 16.252 ms.
+- Tamper: a forged, tampered, over-budget or replayed packet in the ledger is rejected on inhale; poisoned ledger == clean (true).
+- Bounded-replay home: rehydrating SENTINEL's window from the ledger catches a reboot replay a fresh store misses (closes SENTINEL v2 flag #1).
 
 ## The three sovereign object stores (DB: KESTREL_OS)
 - genome_core: the immutable DNA (v1) — the Konomi/LIGHT recipe + structural laws.
