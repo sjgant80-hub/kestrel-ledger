@@ -1,0 +1,4 @@
+node_modules/
+*.log
+verdict.json
+.DS_Store

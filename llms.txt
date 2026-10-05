@@ -1,0 +1,18 @@
+# KESTREL-LEDGER
+> IndexedDB as the Shadow Fold: a binary append-only ledger of signed 6-byte Primorial-Fold packets. Exhale on every state transition; inhale on boot by replaying the ledger onto the immutable DNA. The node resumes in the exact state it closed in.
+
+Live: https://sjgant80-hub.github.io/kestrel-ledger/
+Source: https://github.com/sjgant80-hub/kestrel-ledger
+Built on SENTINEL (https://sjgant80-hub.github.io/sentinel/) and FALL-AIRGAP. Codec: Thomas Frumkin's Konomi / LIGHT primorial-fold (used with permission).
+
+## Sealed, awaiting measurement
+Predictions + the sha256 of every input committed as their own commit before the measurement. Inputs pinned:
+- sentinel.mjs: sha256 81f05c11fa98c72e7119f3b8166d2cf4ff10cdeccaa1ae0d711367d778944440
+- kestrelledger.mjs: sha256 8d3b7d0173a0e6aef2c77e663aab83f6c3418ae396a87eba5867f2db369acd37
+- scripts/measure.mjs: sha256 fa4cc9a9c60787e5c5035cc76a041a658db74d6f55dd9fc6371d00a776b48d55
+The results land on the next commit and are re-derived on CI from exactly these inputs.
+
+## The three sovereign object stores (DB: KESTREL_OS)
+- genome_core: the immutable DNA (v1) — the Konomi/LIGHT recipe + structural laws.
+- crypto_wallet: the local Ed25519 keypair + the capability budget (the physical gate).
+- state_mutations: every 6-byte opcode appended as a raw binary row (append-only).

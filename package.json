@@ -1,0 +1,15 @@
+{
+  "name": "kestrel-ledger",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "kestrelledger.mjs",
+  "description": "IndexedDB as the Shadow Fold (rho): a binary append-only ledger of signed 6-byte Primorial-Fold packets. Exhale on every state transition; inhale on boot by replaying the ledger onto the immutable DNA. The node resumes in the exact state it closed in — reconstruction byte-identical, a poisoned ledger rejected by the Ed25519 verify-before-parse gate.",
+  "author": "sjgant80-hub <sjgant80@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test",
+    "seal": "node scripts/seal.mjs --seal",
+    "measure": "node scripts/measure.mjs --run",
+    "page": "node scripts/make-page.mjs"
+  }
+}

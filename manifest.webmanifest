@@ -1,0 +1,13 @@
+{
+  "name": "KESTREL-LEDGER — IndexedDB as the Shadow Fold",
+  "short_name": "KESTREL",
+  "description": "A binary append-only ledger of signed 6-byte packets. Close the tab, reopen it, resume mid-thought.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#0b0e14",
+  "icons": [
+    { "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%230b0e14'/%3E%3Ctext x='96' y='128' font-size='96' text-anchor='middle' fill='%235eead4' font-family='monospace'%3E%CF%81%3C/text%3E%3C/svg%3E", "sizes": "192x192", "type": "image/svg+xml" }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "note": "Reviewed-equivalent mutants for kestrelledger.mjs, matched by (mutation, exact code line). Empty: the gate must kill every mutant on its own.",
+  "baseline": []
+}

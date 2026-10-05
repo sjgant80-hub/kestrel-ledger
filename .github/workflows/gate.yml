@@ -1,0 +1,75 @@
+name: gate
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  seal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: the inputs still hash to what the seal pinned (seal-before-measure, provable here)
+        run: node scripts/seal.mjs --check
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: the kernel + the IndexedDB round-trip (real Ed25519, in-memory IndexedDB, zero deps)
+        run: node --test
+
+  witness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: witness — every mutant of the ledger kernel must die (baselined equivalents aside)
+        run: |
+          git clone --depth 1 https://github.com/sjgant80-hub/witness.git /tmp/witness
+          node /tmp/witness/witness.mjs mutate kestrelledger.mjs --timeout 60000 --cap 500 --test node --test kestrelledger.test.mjs | tee verdict.json
+          node -e "const v=JSON.parse(require('fs').readFileSync('verdict.json','utf8').replace(/[^]*?(\{[^]*\})[^]*/,'\$1')); if(!v.clean){console.error('witness NOT clean: '+v.survived.length+' survivors'); process.exit(1)} console.log('witness CLEAN — killed '+v.killed+', ignored '+v.ignored.length)"
+
+  fuzz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: fuzz — the ledger state machine never throws on garbage
+        run: |
+          git clone --depth 1 https://github.com/sjgant80-hub/witness.git /tmp/witness
+          node /tmp/witness/witness.mjs fuzz kestrelledger.mjs applyPrimorialFold
+          node /tmp/witness/witness.mjs fuzz kestrelledger.mjs reconstruct
+          node /tmp/witness/witness.mjs fuzz kestrelledger.mjs canonicalState
+
+  measure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: re-derive the sealed results on THIS runner from the sealed inputs (proof-of-play)
+        run: |
+          if [ -f data/run.json ]; then
+            node scripts/measure.mjs --verify
+          else
+            echo "sealed, not yet measured — the measurement lands on a later commit"
+          fi
+
+  page:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: the page is the fixpoint of the kernel (no drift), sealed or measured
+        run: |
+          node scripts/make-page.mjs
+          git diff --exit-code -- index.html llms.txt || (echo "index.html/llms.txt drifted from the kernel — run make-page.mjs" && exit 1)
